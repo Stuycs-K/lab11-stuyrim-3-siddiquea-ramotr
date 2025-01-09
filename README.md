@@ -19,9 +19,9 @@ Make a clear list of features that work/dont work
 ## Adventurer Subclasses
 
 
-| Adventurer | Secretary | Hacker |
-| :---------:| :--------:| :-----:|
-|            |           |        |
-|            |           |        |
-|            |           |        |
+| Accountant | Secretary        | Hacker  |
+| :---------:| :--------:       | :-----: |
+|  Caffiene  |Financial Analysis| Malware |
+|            |                  |         |
+|            |                  |         |
 
