@@ -1,7 +1,7 @@
 import java.util.Random;
 public abstract class Adventurer{
   private String name;
-  private int HP,maxHP;
+  private int wealth,maxWealth;
 
   //Abstract methods are meant to be implemented in child classes.
   /*
@@ -53,7 +53,7 @@ public abstract class Adventurer{
   */
 
   public void applyDamage(int amount){
-    this.HP -= amount;
+    this.wealth -= amount;
   }
 
   //You did it wrong if this happens.
@@ -67,8 +67,8 @@ public abstract class Adventurer{
 
   public Adventurer(String name, int hp){
     this.name = name;
-    this.HP = hp;
-    this.maxHP = hp;
+    this.wealth = hp;
+    this.maxWealth = hp;
   }
 
   //toString method
@@ -81,20 +81,20 @@ public abstract class Adventurer{
     return name;
   }
 
-  public int getHP(){
+  public int getwealth(){
     return HP;
   }
 
-  public int getmaxHP(){
+  public int getmaxWealth(){
     return maxHP;
   }
   public void setmaxHP(int newMax){
-    maxHP = newMax;
+    maxWealth = newMax;
   }
 
   //Set Methods
-  public void setHP(int health){
-    this.HP = health;
+  public void setwealth(int health){
+    this.wealth = health;
   }
 
   public void setName(String s){
