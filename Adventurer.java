@@ -81,19 +81,19 @@ public abstract class Adventurer{
     return name;
   }
 
-  public int getwealth(){
-    return HP;
+  public int getWealth(){
+    return wealth;
   }
 
   public int getmaxWealth(){
-    return maxHP;
+    return maxWealth;
   }
-  public void setmaxHP(int newMax){
+  public void setmaxWealth(int newMax){
     maxWealth = newMax;
   }
 
   //Set Methods
-  public void setwealth(int health){
+  public void setWealth(int health){
     this.wealth = health;
   }
 
