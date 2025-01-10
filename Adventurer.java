@@ -100,4 +100,12 @@ public abstract class Adventurer{
   public void setName(String s){
     this.name = s;
   }
+
+  public int restoreWealth(int n){
+    if( n > getmaxWealth() - getWealth()){
+      n = getmaxWealth() - getWealth();
+    }
+    setWealth(getWealth()+n);
+    return n;
+  }
 }
