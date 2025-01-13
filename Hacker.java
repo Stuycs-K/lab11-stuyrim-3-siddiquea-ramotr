@@ -42,7 +42,7 @@ public class Hacker extends Adventurer{
 
   /*Deal 2-7 damage to opponent, restores 2 caffeine*/
   public String attack(Adventurer other){
-    int damage = 2;
+    int damage = 3;
     other.applyDamage(damage);
     restoreSpecial(2);
     return this + " attacked "+ other + " and dealt "+ damage +
@@ -68,13 +68,13 @@ public class Hacker extends Adventurer{
   /*Restores 5 special to other*/
   public String support(Adventurer other){
     return "Gives a coffee to "+other+" and restores "
-    + other.restoreSpecial(1)+" "+other.getSpecialName();
+    + other.restoreSpecial(2)+" "+other.getSpecialName();
   }
   /*Restores 6 special and 1 hp to self.*/
   public String support(){
-    int hp = 1;
+    int wealth = 1;
     setHP(getwealth()+wealth);
     return this+" drinks a coffee to restores "+restoreSpecial(6)+" "
-    + getSpecialName()+ " and "+hp+" HP";
+    + getSpecialName()+ " and "+wealth+" wealth";
   }
 }
