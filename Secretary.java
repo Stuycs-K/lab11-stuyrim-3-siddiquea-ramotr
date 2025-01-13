@@ -68,7 +68,7 @@ public class Secretary extends Adventurer{
       return this + "threw a hot coffee at "+other+" and burned their face, making them lose a day of work and 6 wealth. "+this+" eats lunch and makes 4 wealth.";
     }
     else {
-      return this+" needs more supplies.";
+      return this+" needs more supplies. Instead "+attack(other);
     }
   }
 }
