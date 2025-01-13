@@ -1,4 +1,3 @@
-import java.util.Random;
 public class Secretary extends Adventurer{
   private int supplies, maxSupplies;
   private String preferredLanguage;
