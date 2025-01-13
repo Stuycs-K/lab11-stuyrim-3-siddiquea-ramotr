@@ -54,9 +54,21 @@ public class Secretary extends Adventurer{
 
   //heal or buff self
   public String support() {
-    restoreWealth()
+    restoreWealth(6);
+    restoreSpecial(4);
+    return this+" had a producti"
   }
 
   //hurt or hinder the target adventurer, consume some special resource
-  public abstract String specialAttack(Adventurer other);
+  public String specialAttack(Adventurer other) {
+    if (getSpecial()>=8) {
+      other.applyDamage(6);
+      restoreWealth(4);
+      setSpecial(getSpecial()-8);
+      return this + "threw a hot coffee at "+other+" and burned their face, making them lose a day of work and 6 wealth. "+this+" eats lunch and makes 4 wealth.";
+    }
+    else {
+      return this+" needs more supplies.";
+    }
+  }
 }
