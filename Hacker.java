@@ -61,20 +61,20 @@ public class Hacker extends Adventurer{
       " skills to hack the matrix. "+
       " This glitched out "+other+" dealing "+ damage +" points of damage.";
     }else{
-      return "Not enough caffeine to use the ultimate code. Instead "+attack(other);
+      return "Not enough malware to use the ultimate code. Instead "+attack(other);
     }
 
   }
   /*Restores 5 special to other*/
   public String support(Adventurer other){
-    return "Gives a coffee to "+other+" and restores "
+    return "Gives a computer to "+other+" and restores "
     + other.restoreSpecial(2)+" "+other.getSpecialName();
   }
   /*Restores 6 special and 1 hp to self.*/
   public String support(){
     int wealth = 1;
     setWealth(getWealth()+wealth);
-    return this+" drinks a coffee to restores "+restoreSpecial(6)+" "
+    return this+" buys a new computer to restore "+restoreSpecial(6)+" "
     + getSpecialName()+ " and "+wealth+" wealth";
   }
 }
