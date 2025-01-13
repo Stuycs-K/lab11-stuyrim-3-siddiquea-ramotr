@@ -4,7 +4,7 @@ public class Hacker extends Adventurer{
 
   /*the other constructors ultimately call the constructor
   *with all parameters.*/
-  public CodeWarrior(String name, int hp, String language){
+  public Hacker(String name, int hp, String language){
     super(name,hp);
     malwareMax = 14;
     malware = malwareMax/2;
@@ -55,7 +55,7 @@ public class Hacker extends Adventurer{
   public String specialAttack(Adventurer other){
     if(getSpecial() >= 8){
       setSpecial(getSpecial()-8);
-      int damage = (int)(Math.random()*7+4;
+      int damage = (int)(Math.random()*7+4);
       other.applyDamage(damage);
       return this + " used their "+preferredLanguage+
       " skills to hack the matrix. "+
@@ -73,7 +73,7 @@ public class Hacker extends Adventurer{
   /*Restores 6 special and 1 hp to self.*/
   public String support(){
     int wealth = 1;
-    setHP(getwealth()+wealth);
+    setWealth(getWealth()+wealth);
     return this+" drinks a coffee to restores "+restoreSpecial(6)+" "
     + getSpecialName()+ " and "+wealth+" wealth";
   }
