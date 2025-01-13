@@ -49,7 +49,7 @@ public class Secretary extends Adventurer{
 
   //heal or buff the target adventurer
   public String support(Adventurer other) {
-    return this+" gave "+other+"a new printer and restored "+other.restoreSpecial(5)+other.getSpecialName();
+    return this+" gave "+other+"a new printer and restored "+other.restoreSpecial(5)+" "+other.getSpecialName();
   }
 
   //heal or buff self
