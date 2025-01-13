@@ -56,7 +56,7 @@ public class Secretary extends Adventurer{
   public String support() {
     restoreWealth(6);
     restoreSpecial(4);
-    return this+" had a producti"
+    return this+" had a productive day at work and gained 6 wealth and 4 supplies.";
   }
 
   //hurt or hinder the target adventurer, consume some special resource
