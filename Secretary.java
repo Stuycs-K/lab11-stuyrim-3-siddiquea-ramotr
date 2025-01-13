@@ -12,13 +12,17 @@ public class Secretary extends Adventurer{
   }
 
   public Secretary(String name){
-    this(name, 10);
+    this(name, 24);
   }
 
-  public Adventurer(String name, int hp){
-    this.name = name;
-    this.wealth = hp;
-    this.maxWealth = hp;
+  public Secretary(String name, int hp){
+    this(name,hp,"Scheduling");
+  }
+  public Secretary(String name, int hp, String lang) {
+    super(name,hp);
+    maxSupplies = 12;
+    supplies = maxSupplies/2;
+    preferredLanguage = lang;
   }
 
   //give it a short name (fewer than 13 characters)
