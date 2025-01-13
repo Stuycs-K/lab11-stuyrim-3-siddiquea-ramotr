@@ -6,13 +6,13 @@ public class Accountant extends Adventurer{
   *with all parameters.*/
   public Accountant(String name, int hp, String language){
     super(name,hp);
-    caffeineMax = 12;
+    caffeineMax = 14;
     caffeine = caffeineMax/2;
     preferredLanguage = language;
   }
 
   public Accountant(String name, int hp){
-    this(name,hp,"c++");
+    this(name,hp,"Financial Analysis");
   }
 
   public Accountant(String name){
@@ -42,7 +42,7 @@ public class Accountant extends Adventurer{
 
   /*Deal 2-7 damage to opponent, restores 4 caffeine*/
   public String attack(Adventurer other){
-    int damage = (int)(Math.random()*6)+2;
+    int damage = (int)(Math.random()*6)+1;
     other.applyDamage(damage);
     restoreSpecial(4);
     return this + " attacked "+ other + " and dealt "+ damage +
@@ -55,7 +55,7 @@ public class Accountant extends Adventurer{
   public String specialAttack(Adventurer other){
     if(getSpecial() >= 8){
       setSpecial(getSpecial()-8);
-      int damage = (int)(Math.random()*5+Math.random()*5)+3;
+      int damage = 7
       other.applyDamage(damage);
       return this + " used their "+preferredLanguage+
       " skills to hack the matrix. "+
