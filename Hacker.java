@@ -20,7 +20,7 @@ public class Hacker extends Adventurer{
   }
 
   public Hacker(){
-    this("steve");
+    this("Steve");
   }
 
   /*The next 8 methods are all required because they are abstract:*/
@@ -40,7 +40,7 @@ public class Hacker extends Adventurer{
     return malwareMax;
   }
 
-  /*Deal 2-7 damage to opponent, restores 2 caffeine*/
+  /*Deal 3 damage to opponent, restores 2 malware*/
   public String attack(Adventurer other){
     int damage = 3;
     other.applyDamage(damage);
@@ -49,8 +49,8 @@ public class Hacker extends Adventurer{
     " points of damage.";
   }
 
-  /*Deal 3-12 damage to opponent, only if caffeine is high enough.
-  *Reduces caffeine by 8.
+  /*Deal 3-10 damage to opponent, only if malware is high enough.
+  *Reduces malware by 8.
   */
   public String specialAttack(Adventurer other){
     if(getSpecial() >= 8){
@@ -65,16 +65,15 @@ public class Hacker extends Adventurer{
     }
 
   }
-  /*Restores 5 special to other*/
+  /*Restores 2 special to other*/
   public String support(Adventurer other){
     return "Gives a computer to "+other+" and restores "
     + other.restoreSpecial(2)+" "+other.getSpecialName();
   }
   /*Restores 6 special and 1 hp to self.*/
   public String support(){
-    int wealth = 1;
-    setWealth(getWealth()+wealth);
+    restoreWealth(1);
     return this+" buys a new computer to restore "+restoreSpecial(6)+" "
-    + getSpecialName()+ " and "+wealth+" wealth";
+    + getSpecialName()+ " and 1 wealth";
   }
 }
