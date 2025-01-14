@@ -69,9 +69,6 @@ public class Accountant extends Adventurer{
   }
   /*Restores 3 special and 1 hp to self.*/
   public String support(){
-    int wealth = 2;
-    setHP(getHP()+wealth);
-    return this+" drinks a coffee to restores "+restoreSpecial(2)+" "
-    + getSpecialName()+ " and "+wealth+" HP";
+    return this+" drinks a coffee to restore "+restoreSpecial(3)+" "+ getSpecialName();
   }
 }
