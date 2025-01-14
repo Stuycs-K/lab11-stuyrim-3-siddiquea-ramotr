@@ -1,5 +1,5 @@
 public class Boss extends Adventurer{
-  int special, specialMax;
+  int employees, employeesMax;
   String preferredLanguage;
 
   /*the other constructors ultimately call the constructor
@@ -12,7 +12,7 @@ public class Boss extends Adventurer{
   }
 
   public Boss(String name, int hp){
-    this(name,hp,"html");
+    this(name,hp,"manipulation");
   }
 
   public Boss(String name){
@@ -25,7 +25,7 @@ public class Boss extends Adventurer{
 
   /*The next 8 methods are all required because they are abstract:*/
   public String getSpecialName(){
-    return "";
+    return "employees";
   }
 
   public int getSpecial(){
@@ -45,8 +45,8 @@ public class Boss extends Adventurer{
     int damage = 2;
     other.applyDamage(damage);
     restoreSpecial(2);
-    return this + " attacked "+ other + " and dealt "+ damage +
-    " points of damage.";
+    return this + " gave  "+ other +  damage +
+    "years of unpaid work!";
   }
 
   /*Deal 3-10 damage to opponent, only if malware is high enough.
