@@ -16,7 +16,7 @@ public class Hacker extends Adventurer{
   }
 
   public Hacker(String name){
-    this(name,24);
+    this(name,20);
   }
 
   public Hacker(){
@@ -40,9 +40,9 @@ public class Hacker extends Adventurer{
     return malwareMax;
   }
 
-  /*Deal 3 damage to opponent, restores 2 malware*/
+  /*Deal 5 damage to opponent, restores 2 malware*/
   public String attack(Adventurer other){
-    int damage = 3;
+    int damage = 5;
     other.applyDamage(damage);
     restoreSpecial(2);
     return this + " attacked "+ other + " and dealt "+ damage +
@@ -70,10 +70,10 @@ public class Hacker extends Adventurer{
     return "Gives a computer to "+other+" and restores "
     + other.restoreSpecial(2)+" "+other.getSpecialName();
   }
-  /*Restores 6 special and 1 hp to self.*/
+  /*Restores 6 special and 4 wealth to self.*/
   public String support(){
-    restoreWealth(1);
+    restoreWealth(4);
     return this+" buys a new computer to restore "+restoreSpecial(6)+" "
-    + getSpecialName()+ " and 1 wealth";
+    + getSpecialName()+ " and 4 wealth";
   }
 }
