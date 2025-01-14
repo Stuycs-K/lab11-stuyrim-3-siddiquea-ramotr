@@ -2,19 +2,30 @@ import java.util.*;
 public class Game{
   private static final int WIDTH = 80;
   private static final int HEIGHT = 30;
-  private static final int BORDER_COLOR = Text.BLACK;
-  private static final int BORDER_BACKGROUND = Text.WHITE + Text.BACKGROUND;
+  private static final int BORDER_COLOR = Text.WHITE;
+  private static final int BORDER_BACKGROUND = Text.BLACK + Text.BACKGROUND;
 
   public static void main(String[] args) {
-    run();
+    drawBackground();
+    System.out.println();
+    //run();
   }
 
   //Display the borders of your screen that will not change.
   //Do not write over the blank areas where text will appear or parties will appear.
   public static void drawBackground(){
-    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    //YOUR CODE HERE
-    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+    Text.go(1,1);
+    System.out.print("\u2554");
+    for (int i=0; i<WIDTH; i++) {
+      System.out.print("\u2550");
+    }
+    System.out.print("\u2557");
+    for (int i = 2;i<HEIGHT;i++) {
+      Text.go(i,1);
+      System.out.print("\u2551");
+      Text.go(i,80);
+      System.out.print("\u2551");
+    }
   }
 
   //Display a line of text starting at
@@ -48,7 +59,7 @@ public class Game{
     //return a random adventurer (choose between all available subclasses)
     //feel free to overload this method to allow specific names/stats.
     public static Adventurer createRandomAdventurer(){
-      return new CodeWarrior("Bob"+(int)(Math.random()*100));
+      return new Accountant("Bob"+(int)(Math.random()*100));
     }
 
     /*Display a List of 2-4 adventurers on the rows row through row+3 (4 rows max)
