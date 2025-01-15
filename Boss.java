@@ -57,9 +57,9 @@ public class Boss extends Adventurer{
       setSpecial(getSpecial()-8);
       int damage = 6
       other.applyDamage(damage);
-      return this + " used their "+preferredLanguage+
-      " skills to hack the matrix. "+
-      " This glitched out "+other+" dealing "+ damage +" points of damage.";
+      return this + " used their "+preferredLanguage+ "skills to fire "+other+
+      ", dealing "+damage+"points of damage!";
+
     }else{
       return "Not enough malware to use the ultimate code. Instead "+attack(other);
     }
@@ -67,8 +67,7 @@ public class Boss extends Adventurer{
   }
   /*Restores 2 special to other*/
   public String support(Adventurer other){
-    return "Gives a computer to "+other+" and restores "
-    + other.restoreSpecial(2)+" "+other.getSpecialName();
+    return support();
   }
   /*Restores 6 special and 4 wealth to self.*/
   public String support(){
