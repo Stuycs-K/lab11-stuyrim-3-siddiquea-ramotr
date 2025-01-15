@@ -8,6 +8,10 @@ public class Game{
   public static void main(String[] args) {
     Text.clear();
     drawBackground();
+    ArrayList<Adventurer> party = new ArrayList<Adventurer>(){};
+    party.add(createRandomAdventurer("Bob"));
+    party.add(createRandomAdventurer("Jim"));
+    drawParty(party,3);
     //run();
   }
 
@@ -85,10 +89,13 @@ public class Game{
     * ***THIS ROW INTENTIONALLY LEFT BLANK***
     */
     public static void drawParty(ArrayList<Adventurer> party,int startRow){
-
-      /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-      //YOUR CODE HERE
-      /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+      for (int i = 0; i<party.size(); i++) {
+        drawText(party.get(i).getName(),startRow,WIDTH/party.size()-18);
+        String wealthRow = "Wealth: "+party.get(i).getWealth();
+        drawText(wealthRow,startRow+1,WIDTH*((i+1)/party.size())-18);
+        String specialRow = party.get(i).getSpecialName()+": "+party.get(i).getSpecial();
+        drawText(specialRow,startRow+2,WIDTH*((i+1)/party.size())-18);
+      }
     }
 
 
