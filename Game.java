@@ -6,8 +6,8 @@ public class Game{
   private static final int BORDER_BACKGROUND = Text.BLACK + Text.BACKGROUND;
 
   public static void main(String[] args) {
+    Text.clear();
     drawBackground();
-    System.out.println();
     //run();
   }
 
@@ -16,7 +16,7 @@ public class Game{
   public static void drawBackground(){
     Text.go(1,1);
     System.out.print("\u2554");
-    for (int i=0; i<WIDTH; i++) {
+    for (int i=0; i<WIDTH-2; i++) {
       System.out.print("\u2550");
     }
     System.out.print("\u2557");
@@ -26,6 +26,13 @@ public class Game{
       Text.go(i,80);
       System.out.print("\u2551");
     }
+    Text.go(30,1);
+    System.out.print("\u255A");
+    for (int i=0; i<WIDTH-2; i++) {
+      System.out.print("\u2550");
+    }
+    System.out.print("\u255D");
+    System.out.println("");
   }
 
   //Display a line of text starting at
@@ -128,7 +135,7 @@ public class Game{
     //Clear and initialize
     Text.hideCursor();
     Text.clear();
-
+    drawBackground();
 
     //Things to attack:
     //Make an ArrayList of Adventurers and add 1-3 enemies to it.
