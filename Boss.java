@@ -6,8 +6,8 @@ public class Boss extends Adventurer{
   *with all parameters.*/
   public Boss(String name, int hp, String language){
     super(name,hp);
-    malwareMax = 18;
-    malware = malwareMax/2;
+    employeesMax = 18;
+    employees = employeesMax/2;
     preferredLanguage = language;
   }
 
@@ -29,15 +29,15 @@ public class Boss extends Adventurer{
   }
 
   public int getSpecial(){
-    return x;
+    return employees;
   }
 
   public void setSpecial(int n){
-    x = n;
+    employees = n;
   }
 
   public int getSpecialMax(){
-    return x;
+    return employeesMax;
   }
 
   /*Deal 5 damage to opponent, restores 2 malware*/
@@ -55,13 +55,13 @@ public class Boss extends Adventurer{
   public String specialAttack(Adventurer other){
     if(getSpecial() >= 8){
       setSpecial(getSpecial()-8);
-      int damage = 6
+      int damage = 6;
       other.applyDamage(damage);
       return this + " used their "+preferredLanguage+ "skills to fire "+other+
-      ", dealing "+damage+"points of damage!";
+      ", dealing "+damage+" points of damage!";
 
     }else{
-      return "Not enough malware to use the ultimate code. Instead "+attack(other);
+      return "Not enough employees to afford firing. Instead "+attack(other);
     }
 
   }
@@ -72,7 +72,7 @@ public class Boss extends Adventurer{
   /*Restores 6 special and 4 wealth to self.*/
   public String support(){
     restoreWealth(4);
-    return this+" buys a new computer to restore "+restoreSpecial(6)+" "
-    + getSpecialName()+ " and 4 wealth";
+    return this+" hires new employees to restore "+restoreSpecial(6)+" "
+    + getSpecialName()+ " and 4 wealth.";
   }
 }
