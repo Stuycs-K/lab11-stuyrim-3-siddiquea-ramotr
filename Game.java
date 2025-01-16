@@ -7,11 +7,12 @@ public class Game{
 
   public static void main(String[] args) {
     Text.clear();
-    drawBackground();
     ArrayList<Adventurer> party = new ArrayList<Adventurer>(){};
     party.add(createRandomAdventurer("Bob"));
     party.add(createRandomAdventurer("Jim"));
+    party.add(createRandomAdventurer("Sam"));
     drawParty(party,3);
+    drawBackground();
     //run();
   }
 
@@ -90,7 +91,7 @@ public class Game{
     */
     public static void drawParty(ArrayList<Adventurer> party,int startRow){
       for (int i = 0; i<party.size(); i++) {
-        drawText(party.get(i).getName(),startRow,WIDTH/party.size()-18);
+        drawText(party.get(i).getName(),startRow,WIDTH*((i+1)/party.size())-18);
         String wealthRow = "Wealth: "+party.get(i).getWealth();
         drawText(wealthRow,startRow+1,WIDTH*((i+1)/party.size())-18);
         String specialRow = party.get(i).getSpecialName()+": "+party.get(i).getSpecial();
