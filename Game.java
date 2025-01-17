@@ -12,7 +12,7 @@ public class Game{
     party.add(createRandomAdventurer("Jim"));
     party.add(createRandomAdventurer("Sam"));
     drawParty(party,3);
-    clearBox(3,20,10,2);
+    TextBox(10,5,3,8,"yummy food");
     drawBackground();
     //run();
   }
@@ -60,9 +60,19 @@ public class Game{
   *@param height the number of rows
   */
   public static void TextBox(int row, int col, int width, int height, String text){
-    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    //YOUR CODE HERE
-    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+    clearBox(row,col,width,height);
+    int startRow = row;
+    while(text.length()>0 && row<=startRow+height) {
+      if (text.length()>=width) {
+        drawText(text.substring(0,width),row,col);
+        text = text.substring(width);
+      }
+      else {
+        drawText(text,row,col);
+        text = "";
+      }
+      row++;
+    }
   }
   public static void clearBox(int row, int col, int width, int height){
     for (int y=row; y<row+height;y++){
