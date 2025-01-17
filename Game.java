@@ -12,6 +12,7 @@ public class Game{
     party.add(createRandomAdventurer("Jim"));
     party.add(createRandomAdventurer("Sam"));
     drawParty(party,3);
+    clearBox(3,20,10,2);
     drawBackground();
     //run();
   }
@@ -63,6 +64,15 @@ public class Game{
     //YOUR CODE HERE
     /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
   }
+  public static void clearBox(int row, int col, int width, int height){
+    for (int y=row; y<row+height;y++){
+      Text.go(y,col);
+      for (int x=0; x<width;x++){
+        System.out.print(" ");
+      }
+    }
+  }
+  
 
 
 
