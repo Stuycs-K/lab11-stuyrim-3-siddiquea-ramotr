@@ -109,13 +109,9 @@ public class Game{
     *Caffeine: 20 Mana: 10   Snark: 1
     * ***THIS ROW INTENTIONALLY LEFT BLANK***
     */
-    public static void drawParty(ArrayList<Adventurer> party,int startRow){
-      for (int i = 0; i<party.size(); i++) {
-        drawText(party.get(i).getName(),startRow,WIDTH*((i+1)/party.size())-18);
-        String wealthRow = "Wealth: "+party.get(i).getWealth();
-        drawText(wealthRow,startRow+1,WIDTH*((i+1)/party.size())-18);
-        String specialRow = party.get(i).getSpecialName()+": "+party.get(i).getSpecial();
-        drawText(specialRow,startRow+2,WIDTH*((i+1)/party.size())-18);
+    public static void drawParty(ArrayList<Adventurer> party,int startCol){
+      if (party.size()==1) {
+        
       }
     }
 
