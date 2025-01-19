@@ -110,11 +110,14 @@ public class Game{
     * ***THIS ROW INTENTIONALLY LEFT BLANK***
     */
     public static void drawParty(ArrayList<Adventurer> party,int startCol){
-      if (party.size()==1) {
-        
-      }
+     for (int i = 0; i < party.size(); i++) {
+            Adventurer a = party.get(i);
+            int colOffset = i * 20; 
+            drawText(a.getName(), 2, startCol + colOffset); 
+            drawText("Wealth: " + colorByPercent(a.getWealth(), a.getmaxWealth()), 3, startCol + colOffset); // Display wealth
+            drawText(a.getSpecialName() + ": " + a.getSpecial() + "/" + a.getSpecialMax(), 4, startCol + colOffset); // Display special resource
+        }
     }
-
 
   //Use this to create a colorized number string based on the % compared to the max value.
   public static String colorByPercent(int hp, int maxHP){
@@ -136,15 +139,15 @@ public class Game{
   //Display the party and enemies
   //Do not write over the blank areas where text will appear.
   //Place the cursor at the place where the user will by typing their input at the end of this method.
-  public static void drawScreen(){
+  public static void drawScreen(ArrayList<Adventurer> party, ArrayList<Adventurer> enemies, String playerLog, String enemyLog) {
+        drawParty(party, 3); 
+        drawParty(enemies, 45); 
+        TextBox(25, 3, 35, 3, playerLog); 
+        TextBox(25, 42, 35, 3, enemyLog); 
+    }
 
-    drawBackground();
 
-    //draw player party
-
-    //draw enemy party
-
-  }
+  
 
   public static String userInput(Scanner in){
       //Move cursor to prompt location
