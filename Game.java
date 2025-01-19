@@ -6,16 +6,42 @@ public class Game{
   private static final int BORDER_BACKGROUND = Text.BLACK + Text.BACKGROUND;
 
   public static void main(String[] args) {
-    Text.clear();
-    ArrayList<Adventurer> party = new ArrayList<Adventurer>(){};
-    party.add(createRandomAdventurer("Bob"));
-    party.add(createRandomAdventurer("Jim"));
-    party.add(createRandomAdventurer("Sam"));
-    drawParty(party,3);
-    TextBox(10,5,3,8,"yummy food");
-    drawBackground();
-    //run();
-  }
+  Text.clear();
+        ArrayList<Adventurer> party = new ArrayList<>();
+        party.add(createRandomAdventurer("Bob"));
+        party.add(createRandomAdventurer("Jim"));
+        party.add(createRandomAdventurer("Sam"));
+
+        ArrayList<Adventurer> enemies = new ArrayList<>();
+
+        
+        System.out.println("Choose your enemies:");
+        System.out.println("1. Play only against the boss");
+        System.out.println("2. Play against other enemies (not including the boss)");
+
+        Scanner in = new Scanner(System.in);
+        int choice = 0;
+        while (choice != 1 && choice != 2) {
+            System.out.print("Enter your choice (1 or 2): ");
+            if (in.hasNextInt()) {
+                choice = in.nextInt();
+            } else {
+                in.next(); 
+            }
+        }
+
+        if (choice == 1) {
+            enemies.add(new Boss("Big Boss"));
+        } else if (choice == 2) {
+            enemies.add(createRandomAdventurer("Enemy1"));
+            enemies.add(createRandomAdventurer("Enemy2")); 
+        }
+
+        String playerLog = "";
+        String enemyLog = "";
+
+        run(party, enemies, playerLog, enemyLog);
+    }
 
   //Display the borders of your screen that will not change.
   //Do not write over the blank areas where text will appear or parties will appear.
