@@ -322,6 +322,17 @@ public class Game{
             return -1;
         }
     }
+	public static void gameOver(boolean playerWins) {
+    Text.clear();
+    String message;
+    if (playerWins) {
+        message = "You Win!";
+    } else {
+        message = "You Lose!";
+    }
+    drawText(message, HEIGHT / 2, WIDTH / 2 - message.length() / 2);
+    quit();
+}
   
   
   
