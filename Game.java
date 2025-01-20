@@ -315,4 +315,14 @@ public class Game{
     //After quit reset things:
     quit();
   }
+   private static int parseTarget(String input) {
+        try {
+            return Integer.parseInt(input.split(" ")[1]);
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+  
+  
+  
 }
