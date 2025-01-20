@@ -14,7 +14,6 @@ public class Game{
 
         ArrayList<Adventurer> enemies = new ArrayList<>();
 
-        
         System.out.println("Choose your enemies:");
         System.out.println("1. Play only against the boss");
         System.out.println("2. Play against other enemies (not including the boss)");
@@ -26,7 +25,7 @@ public class Game{
             if (in.hasNextInt()) {
                 choice = in.nextInt();
             } else {
-                in.next(); 
+                in.next();
             }
         }
 
@@ -34,14 +33,13 @@ public class Game{
             enemies.add(new Boss("Big Boss"));
         } else if (choice == 2) {
             enemies.add(createRandomAdventurer("Enemy1"));
-            enemies.add(createRandomAdventurer("Enemy2")); 
+            enemies.add(createRandomAdventurer("Enemy2"));
         }
 
-        String playerLog = "";
-        String enemyLog = "";
-
-        run(party, enemies, playerLog, enemyLog);
+        ArrayList<String> actionLog = new ArrayList<>();
+        run(party, enemies, actionLog);
     }
+
 
   //Display the borders of your screen that will not change.
   //Do not write over the blank areas where text will appear or parties will appear.
@@ -135,13 +133,15 @@ public class Game{
     *Caffeine: 20 Mana: 10   Snark: 1
     * ***THIS ROW INTENTIONALLY LEFT BLANK***
     */
-    public static void drawParty(ArrayList<Adventurer> party,int startCol){
-     for (int i = 0; i < party.size(); i++) {
+    public static void drawParty(ArrayList<Adventurer> party, int startCol) {
+        clearBox(2, startCol, 20 * party.size(), 5);
+        for (int i = 0; i < party.size(); i++) {
             Adventurer a = party.get(i);
-            int colOffset = i * 20; 
-            drawText(a.getName(), 2, startCol + colOffset); 
-            drawText("Wealth: " + colorByPercent(a.getWealth(), a.getmaxWealth()), 3, startCol + colOffset); // Display wealth
-            drawText(a.getSpecialName() + ": " + a.getSpecial() + "/" + a.getSpecialMax(), 4, startCol + colOffset); // Display special resource
+            int colOffset = i * 20;
+            String name = a.getWealth() > 0 ? a.getName() : a.getName() + " [DEAD]";
+            drawText(name, 2, startCol + colOffset);
+            drawText("Wealth: " + (a.getWealth() > 0 ? colorByPercent(a.getWealth(), a.getmaxWealth()) : "0/0"), 3, startCol + colOffset);
+            drawText(a.getSpecialName() + ": " + a.getSpecial() + "/" + a.getSpecialMax(), 4, startCol + colOffset);
         }
     }
 
@@ -165,11 +165,12 @@ public class Game{
   //Display the party and enemies
   //Do not write over the blank areas where text will appear.
   //Place the cursor at the place where the user will by typing their input at the end of this method.
-  public static void drawScreen(ArrayList<Adventurer> party, ArrayList<Adventurer> enemies, String playerLog, String enemyLog) {
-        drawParty(party, 3); 
-        drawParty(enemies, 45); 
-        TextBox(25, 3, 35, 3, playerLog); 
-        TextBox(25, 42, 35, 3, enemyLog); 
+  public static void drawScreen(ArrayList<Adventurer> party, ArrayList<Adventurer> enemies, ArrayList<String> actionLog) {
+        clearBox(1, 1, WIDTH, HEIGHT);
+        drawBackground();
+        drawParty(party, 3);
+        drawParty(enemies, 45);
+        drawActionLog(actionLog);
     }
 
 
@@ -189,132 +190,92 @@ public class Game{
     Text.go(32,1);
   }
 
-  public static void run(){
-    //Clear and initialize
-    Text.hideCursor();
-    Text.clear();
-    drawBackground();
+    public static void run(ArrayList<Adventurer> party, ArrayList<Adventurer> enemies, ArrayList<String> actionLog) {
+        Text.hideCursor();
+        Text.clear();
+        drawBackground();
 
-    //Things to attack:
-    //Make an ArrayList of Adventurers and add 1-3 enemies to it.
-    //If only 1 enemy is added it should be the boss class.
-    //start with 1 boss and modify the code to allow 2-3 adventurers later.
-    ArrayList<Adventurer>enemies = new ArrayList<Adventurer>();
-    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    //YOUR CODE HERE
-    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+        boolean partyTurn = true;
+        int whichPlayer = 0;
+        int whichOpponent = 0;
+        String input = "";
+        Scanner in = new Scanner(System.in);
+        drawScreen(party, enemies, actionLog);
 
-    //Adventurers you control:
-    //Make an ArrayList of Adventurers and add 2-4 Adventurers to it.
-    ArrayList<Adventurer> party = new ArrayList<>();
-    /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-    //YOUR CODE HERE
-    /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+        while (!input.equalsIgnoreCase("quit") && !input.equalsIgnoreCase("q")) {
+            if (party.isEmpty()) {
+                gameOver(false);
+                return;
+            } else if (enemies.isEmpty()) {
+                gameOver(true);
+                return;
+            }
 
-    boolean partyTurn = true;
-    int whichPlayer = 0;
-    int whichOpponent = 0;
-    int turn = 0;
-    String input = "";//blank to get into the main loop.
-    Scanner in = new Scanner(System.in);
-    //Draw the window border
+            if (partyTurn) {
+                Adventurer currentPlayer = party.get(whichPlayer);
+                if (currentPlayer.getWealth() > 0) {
+                    clearBox(HEIGHT + 1, 1, WIDTH, 1);
+                    drawText("Enter command for " + currentPlayer.getName() + ": attack #/special #/support #/quit", HEIGHT + 1, 1);
+                    input = userInput(in);
 
-    //You can add parameters to draw screen!
-    drawScreen();//initial state.
+                    if (input.startsWith("attack") || input.startsWith("a")) {
+                        int target = parseTarget(input);
+                        if (target >= 0 && target < enemies.size()) {
+                            String log = currentPlayer.attack(enemies.get(target));
+                            actionLog.add(log);
+                            if (enemies.get(target).getWealth() <= 0) {
+                                enemies.remove(target);
+                            }
+                        } else {
+                            actionLog.add("Invalid target.");
+                        }
+                    } else if (input.startsWith("special") || input.startsWith("sp")) {
+                        int target = parseTarget(input);
+                        if (target >= 0 && target < enemies.size()) {
+                            String log = currentPlayer.specialAttack(enemies.get(target));
+                            actionLog.add(log);
+                            if (enemies.get(target).getWealth() <= 0) {
+                                enemies.remove(target);
+                            }
+                        } else {
+                            actionLog.add("Invalid target.");
+                        }
+                    } else if (input.startsWith("support") || input.startsWith("su")) {
+                        int target = parseTarget(input);
+                        if (target >= 0 && target < party.size()) {
+                            String log = currentPlayer.support(party.get(target));
+                            actionLog.add(log);
+                        } else {
+                            actionLog.add("Invalid target.");
+                        }
+                    }
+                }
+                whichPlayer++;
+                if (whichPlayer >= party.size()) {
+                    partyTurn = false;
+                    whichPlayer = 0;
+                }
+            } else {
+                Adventurer currentEnemy = enemies.get(whichOpponent);
+                Adventurer target = party.get((int) (Math.random() * party.size()));
+                String log = currentEnemy.attack(target);
+                actionLog.add(log);
+                if (target.getWealth() <= 0) {
+                    party.remove(target);
+                }
+                whichOpponent++;
+                if (whichOpponent >= enemies.size()) {
+                    partyTurn = true;
+                    whichOpponent = 0;
+                }
+            }
 
-    //Main loop
-
-    //display this prompt at the start of the game.
-    String preprompt = "Enter command for "+party.get(whichPlayer)+": attack/special/quit";
-
-    while(! (input.equalsIgnoreCase("q") || input.equalsIgnoreCase("quit"))){
-      //Read user input
-      input = userInput(in);
-
-      //example debug statment
-      TextBox(24,2,1,78,"input: "+input+" partyTurn:"+partyTurn+ " whichPlayer="+whichPlayer+ " whichOpp="+whichOpponent );
-
-      //display event based on last turn's input
-      if(partyTurn){
-
-        //Process user input for the last Adventurer:
-        if(input.equals("attack") || input.equals("a")){
-          /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-          //YOUR CODE HERE
-          /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
+            drawScreen(party, enemies, actionLog);
         }
-        else if(input.equals("special") || input.equals("sp")){
-          /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-          //YOUR CODE HERE
-          /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-        }
-        else if(input.startsWith("su ") || input.startsWith("support ")){
-          //"support 0" or "su 0" or "su 2" etc.
-          //assume the value that follows su  is an integer.
-          /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-          //YOUR CODE HERE
-          /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-        }
 
-        //You should decide when you want to re-ask for user input
-        //If no errors:
-        whichPlayer++;
-
-
-        if(whichPlayer < party.size()){
-          //This is a player turn.
-          //Decide where to draw the following prompt:
-          String prompt = "Enter command for "+party.get(whichPlayer)+": attack/special/quit";
-
-
-        }else{
-          //This is after the player's turn, and allows the user to see the enemy turn
-          //Decide where to draw the following prompt:
-          String prompt = "press enter to see monster's turn";
-
-          partyTurn = false;
-          whichOpponent = 0;
-        }
-        //done with one party member
-      }else{
-        //not the party turn!
-
-
-        //enemy attacks a randomly chosen person with a randomly chosen attack.z`
-        //Enemy action choices go here!
-        /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
-        //YOUR CODE HERE
-        /*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
-
-
-        //Decide where to draw the following prompt:
-        String prompt = "press enter to see next turn";
-
-        whichOpponent++;
-
-      }//end of one enemy.
-
-      //modify this if statement.
-      if(!partyTurn && whichOpponent >= enemies.size()){
-        //THIS BLOCK IS TO END THE ENEMY TURN
-        //It only triggers after the last enemy goes.
-        whichPlayer = 0;
-        turn++;
-        partyTurn=true;
-        //display this prompt before player's turn
-        String prompt = "Enter command for "+party.get(whichPlayer)+": attack/special/quit";
-      }
-
-      //display the updated screen after input has been processed.
-      drawScreen();
-
-
-    }//end of main game loop
-
-
-    //After quit reset things:
-    quit();
-  }
+        quit();
+    }
+	
    private static int parseTarget(String input) {
         try {
             return Integer.parseInt(input.split(" ")[1]);
