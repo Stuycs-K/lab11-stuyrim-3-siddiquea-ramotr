@@ -333,6 +333,18 @@ public class Game{
     drawText(message, HEIGHT / 2, WIDTH / 2 - message.length() / 2);
     quit();
 }
+ public static void drawActionLog(ArrayList<String> actionLog) {
+        int row = 10;
+        int col = 25;
+        int height = 6;
+        int width = 30;
+        clearBox(row, col, width, height);
+        drawText("Action Log:", row, col);
+        int logStart = Math.max(0, actionLog.size() - (height - 1));
+        for (int i = 0; i < height - 1 && logStart + i < actionLog.size(); i++) {
+            drawText(actionLog.get(logStart + i), row + 1 + i, col);
+        }
+    }
   
   
   
