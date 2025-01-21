@@ -133,15 +133,15 @@ public class Game{
     *Caffeine: 20 Mana: 10   Snark: 1
     * ***THIS ROW INTENTIONALLY LEFT BLANK***
     */
-    public static void drawParty(ArrayList<Adventurer> party, int startCol) {
-        clearBox(2, startCol, 20 * party.size(), 5);
+    public static void drawParty(ArrayList<Adventurer> party, int startRow) {
+        clearBox(startRow, 3, 20 * party.size(), 5);
         for (int i = 0; i < party.size(); i++) {
             Adventurer a = party.get(i);
-            int colOffset = i * 20;
+            int colOffset = i * 26;
             String name = a.getWealth() > 0 ? a.getName() : a.getName() + " [DEAD]";
-            drawText(name, 2, startCol + colOffset);
-            drawText("Wealth: " + (a.getWealth() > 0 ? colorByPercent(a.getWealth(), a.getmaxWealth()) : "0/0"), 3, startCol + colOffset);
-            drawText(a.getSpecialName() + ": " + a.getSpecial() + "/" + a.getSpecialMax(), 4, startCol + colOffset);
+            drawText(name, startRow, 3 + colOffset);
+            drawText("Wealth: " + (a.getWealth() > 0 ? colorByPercent(a.getWealth(), a.getmaxWealth()) : "0/0"), startRow+1, 3 + colOffset);
+            drawText(a.getSpecialName() + ": " + a.getSpecial() + "/" + a.getSpecialMax(), startRow+2, 3 + colOffset);
         }
     }
 
