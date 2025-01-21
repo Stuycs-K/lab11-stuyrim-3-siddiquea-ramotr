@@ -6,11 +6,9 @@ public class Game{
   private static final int BORDER_BACKGROUND = Text.BLACK + Text.BACKGROUND;
 
   public static void main(String[] args) {
-  Text.clear();
         ArrayList<Adventurer> party = new ArrayList<>();
-        party.add(createRandomAdventurer("Bob"));
-        party.add(createRandomAdventurer("Jim"));
-        party.add(createRandomAdventurer("Sam"));
+        party.add(createRandomAdventurer());
+        party.add(createRandomAdventurer());
 
         ArrayList<Adventurer> enemies = new ArrayList<>();
 
@@ -34,6 +32,7 @@ public class Game{
         } else if (choice == 2) {
             enemies.add(createRandomAdventurer("Enemy1"));
             enemies.add(createRandomAdventurer("Enemy2"));
+            enemies.add(createRandomAdventurer("Enemy3"));
         }
 
         ArrayList<String> actionLog = new ArrayList<>();
@@ -123,6 +122,16 @@ public class Game{
       }
       return new Secretary(name);
     }
+    public static Adventurer createRandomAdventurer(){
+      int index = (int)(Math.random()*3);
+      if (index == 0) {
+        return new Accountant();
+      }
+      else if (index == 1) {
+        return new Hacker();
+      }
+      return new Secretary();
+    }
 
     /*Display a List of 2-4 adventurers on the rows row through row+3 (4 rows max)
     *Should include Name HP and Special on 3 separate lines.
@@ -167,17 +176,17 @@ public class Game{
   //Place the cursor at the place where the user will by typing their input at the end of this method.
   public static void drawScreen(ArrayList<Adventurer> party, ArrayList<Adventurer> enemies, ArrayList<String> actionLog) {
         clearBox(1, 1, WIDTH, HEIGHT);
-        drawBackground();
-        drawParty(party, 3);
-        drawParty(enemies, 45);
+        drawParty(party, 2);
+        drawParty(enemies, 7);
         drawActionLog(actionLog);
+        drawBackground();
     }
 
 
   
 
   public static String userInput(Scanner in){
-     Text.go(HEIGHT + 1, 1);
+     Text.go(HEIGHT + 3, 1);
         Text.showCursor();
         String input = in.nextLine();
         Text.hideCursor();
@@ -193,7 +202,6 @@ public class Game{
     public static void run(ArrayList<Adventurer> party, ArrayList<Adventurer> enemies, ArrayList<String> actionLog) {
         Text.hideCursor();
         Text.clear();
-        drawBackground();
 
         boolean partyTurn = true;
         int whichPlayer = 0;
@@ -215,9 +223,9 @@ public class Game{
                 Adventurer currentPlayer = party.get(whichPlayer);
                 if (currentPlayer.getWealth() > 0) {
                     clearBox(HEIGHT + 1, 1, WIDTH, 1);
-                    drawText("Enter command for " + currentPlayer.getName() + ": attack #/special #/support #/quit", HEIGHT + 1, 1);
+                    drawText("Enter command for " + currentPlayer.getName() + ": attack (a) / special (sp) / support (su) / quit (q)", HEIGHT+1, 1);
+                    drawText("Press space, then enter target (as an integer) for " + currentPlayer.getName(), HEIGHT+2, 1);
                     input = userInput(in);
-
                     if (input.startsWith("attack") || input.startsWith("a")) {
                         int target = parseTarget(input);
                         if (target >= 0 && target < enemies.size()) {
@@ -295,15 +303,15 @@ public class Game{
     quit();
 }
  public static void drawActionLog(ArrayList<String> actionLog) {
-        int row = 10;
-        int col = 25;
-        int height = 6;
-        int width = 30;
+        int row = 13;
+        int col = 3;
+        int height = 15;
+        int width = 50;
         clearBox(row, col, width, height);
         drawText("Action Log:", row, col);
         int logStart = Math.max(0, actionLog.size() - (height - 1));
         for (int i = 0; i < height - 1 && logStart + i < actionLog.size(); i++) {
-            drawText(actionLog.get(logStart + i), row + 1 + i, col);
+            TextBox(row + 1 + i, col, 77, 15, actionLog.get(logStart + i));
         }
     }
   
